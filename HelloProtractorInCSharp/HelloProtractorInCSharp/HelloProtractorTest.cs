@@ -27,6 +27,7 @@ namespace HelloProtractorInCSharp
             var chromeOptions = new ChromeOptions();
             var proxy = new Proxy();
             proxy.HttpProxy = "http://proxy.wdf.sap.corp:8080";
+            // HACK : Option for proxy
             //chromeOptions.Proxy = proxy;
 
             /**
@@ -35,8 +36,10 @@ namespace HelloProtractorInCSharp
              * https://stackoverflow.com/questions/46342017/c-sharp-selenium-start-chrome-with-different-user-profile
              * 
              */
-            chromeOptions.AddArguments("user-data-dir=C:/Users/I301118/AppData/Local/Google/Chrome/User Data/");
+            // HACK : Use local profile. I only use my local setting when I need the proxy.
+            //chromeOptions.AddArguments("user-data-dir=C:/Users/I301118/AppData/Local/Google/Chrome/User Data/");
 
+            // HACK : Make sure the chrome driver is in path.
             //driver = new ChromeDriver();
             driver = new ChromeDriver(chromeOptions);
 
