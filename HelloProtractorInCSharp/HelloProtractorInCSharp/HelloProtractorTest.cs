@@ -4,14 +4,17 @@ using OpenQA.Selenium.Chrome;
 using Protractor;
 using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace HelloProtractorInCSharp
 {
-    public class Tests
+    public class HelloProtractorTest
     {
 
-        IWebDriver driver;
-        NgWebDriver ngDriver;
+        private IWebDriver driver;
+        private NgWebDriver ngDriver;
+
+        private String outerHtml = "outerHTML";
 
         [SetUp]
         public void Setup()
@@ -59,7 +62,7 @@ namespace HelloProtractorInCSharp
         ///  - https://anthonychu.ca/post/end-to-end-testing-angular-apps-with-nunit-and-specflow-using-protractornet/
         ///  
         /// </summary>
-        public void Basic_AddOneAndTwo_ShouldBeThree()
+        public void Protractor_AddOneAndTwo_ShouldBeThree()
         {
             Trace.WriteLine("Test Started");
             ngDriver.Url = "http://juliemr.github.io/protractor-demo/"; // navigate to URL
@@ -73,6 +76,31 @@ namespace HelloProtractorInCSharp
             Trace.WriteLine("latestResult:" + latestResult);
             Trace.WriteLine("Test Ended");
 
+        }
+
+        [Test]
+        /// <summary>
+        /// Test the angular panel and accordion
+        /// https://material.angular.io/components/expansion/examples
+        /// </summary>
+        public void Selenium_AngularPanelAndAccordion()
+        {
+            driver.Url = "https://material.angular.io/components/expansion/examples"; // navigate to URL
+            
+            IWebElement titleOfFirstPanel = driver.FindElements(By.TagName("mat-panel-title"))[0];
+            titleOfFirstPanel.Click();
+            IWebElement inputFirstName = driver.FindElements(By.Id("mat-input-0"))[0];
+            inputFirstName.SendKeys("MyName");
+            Trace.WriteLine("1st Step: Input the name in the first panel.");
+            Thread.Sleep(5000);
+
+            IWebElement titleOfSecondPanel= driver.FindElements(By.TagName("mat-panel-title"))[1];
+            titleOfSecondPanel.Click();
+            IWebElement textInSecondPanel = driver.FindElement(By.CssSelector("#cdk-accordion-child-7 > div > p"));
+            Trace.WriteLine(textInSecondPanel.GetAttribute(outerHtml));
+            textInSecondPanel.Click();
+            Trace.WriteLine("2nd Step: Click the text in the 2nd panel.");
+            Trace.WriteLine("Test Ended");
         }
 
         [TearDown]
