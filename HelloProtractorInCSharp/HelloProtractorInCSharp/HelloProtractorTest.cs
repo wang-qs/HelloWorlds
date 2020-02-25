@@ -61,6 +61,7 @@ namespace HelloProtractorInCSharp
         /// </summary>
         public void Basic_AddOneAndTwo_ShouldBeThree()
         {
+            Trace.WriteLine("Test Started");
             ngDriver.Url = "http://juliemr.github.io/protractor-demo/"; // navigate to URL
 
             ngDriver.FindElement(NgBy.Model("first")).SendKeys("1");
